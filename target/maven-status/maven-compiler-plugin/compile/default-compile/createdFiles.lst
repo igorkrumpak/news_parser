@@ -1,0 +1,10 @@
+si\iitech\Application.class
+si\iitech\parser\WebSiteParser.class
+si\iitech\parser\object\impl\ArticleMedia.class
+si\iitech\Task.class
+si\iitech\parser\WebSiteParser$1.class
+si\iitech\parser\impl\SloTechParser.class
+si\iitech\parser\object\impl\ArticleSource.class
+si\iitech\parser\WebSiteParser$2.class
+si\iitech\parser\object\impl\Article.class
+si\iitech\parser\repository\impl\ArticleRepository.class
