@@ -8,14 +8,9 @@
         http://www.ektorp.org/schema/couchdb/couchdb.xsd
         http://www.springframework.org/schema/util 
         http://www.springframework.org/schema/util/spring-util-3.0.xsd">
-
-	
-
 	<util:properties id="couchdbProperties" location="classpath:/couchdb.properties" />
 	<util:properties id="applicationProperties" location="classpath:/application.properties" />
-	
-	
-	
 	<couchdb:instance id="couchDB" url="https://couchdb-3594d0.smileupps.com" properties="couchdbProperties" />
 	<couchdb:database name="articles" instance-ref="couchDB" />
+	<couchdb:database name="sources" instance-ref="couchDB" />
 </beans>

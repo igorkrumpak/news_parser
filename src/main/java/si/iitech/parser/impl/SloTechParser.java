@@ -14,8 +14,8 @@ import org.springframework.stereotype.Component;
 import si.iitech.parser.ArticleParser;
 import si.iitech.parser.exception.impl.MissingTitleException;
 import si.iitech.parser.object.impl.Article;
-import si.iitech.parser.object.impl.ArticleMedia;
-import si.iitech.parser.object.impl.ArticleSource;
+import si.iitech.parser.object.impl.Media;
+import si.iitech.parser.object.impl.Source;
 
 @Component
 public class SloTechParser extends ArticleParser {
@@ -74,7 +74,7 @@ public class SloTechParser extends ArticleParser {
 	@Override
 	protected void parseArticle(Document document, Article article) throws Exception  {
 		Elements elementArticle = document.select(CssQuery.ARTICLE);
-		article.setSource(ArticleSource.SLO_TECH);
+		article.setSource(Source.SLO_TECH);
 		setTitle(article, elementArticle);
 		setPublishedDate(article, elementArticle);
 		setAutthors(article, elementArticle);
@@ -101,9 +101,9 @@ public class SloTechParser extends ArticleParser {
 
 	private void setSources(Article article, Elements elementsData) {
 		Elements sourceElements = elementsData.select(CssQuery.SOURCE);
-		ArrayList<ArticleMedia> sources = new ArrayList<ArticleMedia>();
+		ArrayList<Media> sources = new ArrayList<Media>();
 		if (!sourceElements.isEmpty()) {
-			ArticleMedia source = new ArticleMedia();
+			Media source = new Media();
 			source.setUrl(sourceElements.get(0).attr(HtmlAttribute.HREF));
 			source.setTitle(sourceElements.get(0).text());
 			sources.add(source);
@@ -113,10 +113,10 @@ public class SloTechParser extends ArticleParser {
 
 	private void setVideos(Article article, Elements elementArticle) {
 		Elements videoElements = elementArticle.select(CssQuery.YOUTUBE_PLAYER);
-		List<ArticleMedia> videos = new ArrayList<ArticleMedia>();
+		List<Media> videos = new ArrayList<Media>();
 		if (!videoElements.isEmpty()) {
 			for (Element videoElement : videoElements) {
-				ArticleMedia video = new ArticleMedia();
+				Media video = new Media();
 				video.setUrl(videoElement.attr(HtmlAttribute.SRC));
 				videos.add(video);
 			}
@@ -126,11 +126,11 @@ public class SloTechParser extends ArticleParser {
 
 	private void setImages(Article article, Elements elementArticle) {
 		Elements imageElements = elementArticle.select(CssQuery.IMG);
-		ArticleMedia image;
-		List<ArticleMedia> images = new ArrayList<ArticleMedia>();
+		Media image;
+		List<Media> images = new ArrayList<Media>();
 		if (!imageElements.isEmpty()) {
 			for (Element imageElement : imageElements) {
-				image = new ArticleMedia();
+				image = new Media();
 				image.setUrl((Strings.HTTPS).concat(imageElement.attr(HtmlAttribute.SRC)));
 				image.setTitle(imageElement.attr(HtmlAttribute.ALT).trim());
 				images.add(image);

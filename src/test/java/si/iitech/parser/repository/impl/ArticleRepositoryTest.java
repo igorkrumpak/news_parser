@@ -3,17 +3,17 @@ package si.iitech.parser.repository.impl;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.Arrays;
-import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.List;
 
-import org.junit.After;
+import org.junit.Before;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import si.iitech.AbstractTest;
 import si.iitech.parser.object.impl.Article;
-import si.iitech.parser.object.impl.ArticleMedia;
-import si.iitech.parser.object.impl.ArticleSource;
+import si.iitech.parser.object.impl.Media;
+import si.iitech.parser.object.impl.Source;
 
 public class ArticleRepositoryTest extends AbstractTest {
 
@@ -49,6 +49,8 @@ public class ArticleRepositoryTest extends AbstractTest {
 		List<Article> retrivedArticles = articleRepository.findByTitle(TEST_TITLE);
 		assertThat(retrivedArticles).isNotEmpty();
 		assertThat(retrivedArticles.size()).isEqualTo(1);
+		Article retrivedArticle = retrivedArticles.get(0);
+		assertThat(retrivedArticle).isEqualTo(article);
 	}
 
 	private Article newArticle() {
@@ -57,16 +59,16 @@ public class ArticleRepositoryTest extends AbstractTest {
 		article.setAuthors(Arrays.asList("Irena", "Igor"));
 		article.setUrl("www.google.com");
 		article.setHtml("<html></html>");
-		article.setImages(Arrays.asList(new ArticleMedia("title", "www.google.com")));
-		article.setPublishDate(new Date().getTime());
-		article.setSource(ArticleSource.SLO_TECH);
-		article.setSources(Arrays.asList(new ArticleMedia("slo-tech", "www.google.com")));
-		article.setVideos(Arrays.asList(new ArticleMedia("video1", "www.google.com")));
+		article.setImages(Arrays.asList(new Media("title", "www.google.com")));
+		article.setPublishDate(new GregorianCalendar(2000, 1, 1).getTime().getTime());
+		article.setSource(Source.SLO_TECH);
+		article.setSources(Arrays.asList(new Media("slo-tech", "www.google.com")));
+		article.setVideos(Arrays.asList(new Media("video1", "www.google.com")));
 		return article;
 	}
 	
-	@After
-	public void breakDown() {
+	@Before
+	public void setUp() {
 		List<Article> retrivedArticles = articleRepository.findByTitle(TEST_TITLE);
 		for (Article articleToRemove : retrivedArticles) {
 			articleRepository.remove(articleToRemove);
