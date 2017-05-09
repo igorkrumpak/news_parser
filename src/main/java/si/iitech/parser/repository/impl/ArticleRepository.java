@@ -5,7 +5,6 @@ import java.util.List;
 import org.ektorp.CouchDbConnector;
 import org.ektorp.support.CouchDbRepositorySupport;
 import org.ektorp.support.GenerateView;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
@@ -14,9 +13,6 @@ import si.iitech.parser.object.impl.Article;
 @Component
 public class ArticleRepository extends CouchDbRepositorySupport<Article> {
 	
-	@Autowired
-	private SourceRepository sourceRepository;
-
 	protected ArticleRepository(@Qualifier("articles") CouchDbConnector db) {
 		super(Article.class, db);
 		initStandardDesignDocument();
@@ -26,7 +22,6 @@ public class ArticleRepository extends CouchDbRepositorySupport<Article> {
 	public void add(Article article) {
 		List<Article> retrivedArticles = findByTitle(article.getTitle());
 		if(retrivedArticles.isEmpty()) {
-			sourceRepository.add(article.getSource());
 			super.add(article);
 		} else if(retrivedArticles.size() == 1) {
 			Article retrivedArticle = retrivedArticles.get(0);

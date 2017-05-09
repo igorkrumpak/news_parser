@@ -1,12 +1,9 @@
 package si.iitech.parser.object.impl;
 
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
 
-import org.apache.tomcat.util.codec.binary.Base64;
 import org.codehaus.jackson.annotate.JsonIgnore;
-import org.ektorp.Attachment;
 import org.ektorp.support.CouchDbDocument;
 import org.springframework.core.io.ClassPathResource;
 
@@ -33,13 +30,6 @@ public class Source extends CouchDbDocument {
 		this.url = url;
 		try {
 			this.image = new ClassPathResource(filePath).getFile();
-			FileInputStream imageInFile = new FileInputStream(this.image);
-			byte imageData[] = new byte[(int) this.image.length()];
-			imageInFile.read(imageData);
-			String encodeBase64URLSafeString = Base64.encodeBase64URLSafeString(imageData);
-			Attachment inline = new Attachment("test", encodeBase64URLSafeString, "image/jpeg");
-			super.addInlineAttachment(inline);
-			imageInFile.close();
 		} catch (IOException e) {
 			throw new RuntimeException("image should exist");
 		}
