@@ -37,11 +37,14 @@ public class SourceRepository extends CouchDbRepositorySupport<Source>
 		}
 		Source sloTech = Source.SLO_TECH;
 		this.add(sloTech);
+		createAttachment(sloTech);
+	}
 
+	private void createAttachment(Source source) {
 		try {
 			AttachmentInputStream attachmentInputStream = new AttachmentInputStream("image",
-					new FileInputStream(sloTech.getImage()), "image/png");
-			db.createAttachment(sloTech.getId(), sloTech.getRevision(), attachmentInputStream);
+					new FileInputStream(source.getImage()), "image/png");
+			db.createAttachment(source.getId(), source.getRevision(), attachmentInputStream);
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}

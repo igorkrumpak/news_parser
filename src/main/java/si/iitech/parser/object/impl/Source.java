@@ -28,6 +28,10 @@ public class Source extends CouchDbDocument {
 		this.key = key;
 		this.name = name;
 		this.url = url;
+		setImage(filePath);
+	}
+
+	private void setImage(String filePath) {
 		try {
 			this.image = new ClassPathResource(filePath).getFile();
 		} catch (IOException e) {
